@@ -1,0 +1,140 @@
+Anthy -- Japanese Kana-Kanji Conversion Engine Library
+							-*- text -*-
+
+What's Anthy?
+=============
+
+Anthy is a library for Japanese Kana-Kanji conversion, targeted for
+Japanese text input.
+
+See following page for Anthy development:
+	http://wiki.debian.org/Teams/DebianAnthy
+	http://git.debian.org/?p=pkg-anthy/anthy.git;a=summary
+
+
+What's New?
+===========
+
+See the file NEWS for new features and other user-visible changes in
+recent versions of Anthy.
+
+
+Installation
+============
+
+The file INSTALL says how to build and install Anhty on your system.
+
+
+Configuration 
+=============
+
+System administrator is expected to set up following three variables
+in anthy-conf.in (usually it's under /etc/anthy directory).
+
+    Variable name  Example                         # Comment
+    ----------------------------------------------------------------
+    ANTHYDIR       /usr/share/anthy                # Directory 
+    DIC_FILE       /usr/share/anthy/anthy.dic      # Dictionary file
+    ZIPDICT        /usr/share/anthy/dic/zipcode.t  # Zipcode file
+
+
+Anthy Dictionary (anthy.dic)
+============================
+
+Here is a figure to explain how Anthy Dictionary (anthy.dic) is
+generated.
+
+   depgraph/*.depword
+   depgraph/conjugate.table
+    ---[depgraph/mkdepgraph]---> anthy.dep (1)
+
+   mkworddic/{extra.t,compound.t,adjust.t,utf8.t,udict},
+   alt-cannadic/{gcanna.ctd,gcannf.ctd,gtankan.ctd,g_fname.t}
+    ---[mkworddic/mkworddic]---> anthy.wdic (2)
+
+   "initial anthy.dic"
+   corpus/corpus.?.txt
+    ---[calctrans/{proccorpus,calctrans}]---> corpus_info (3-1)
+    					      weak_words  (3-2)
+
+      calctrans/{corpus_info,weak_words} (3-1,3-2)
+       ---[calctrans/calctrans]---> anthy.cand_info (3)
+       				    anthy.trans_info (4)
+				    anthy.corpus_array (5)
+				    anthy.corpus_bucket (6)
+      				    anthy.weak_words (7)
+
+         (1) depgraph/anthy.dep
+         (2) mkworddic/anthy.wdic
+         (3) calctrans/anthy.cand_info
+         (4) calctrans/anthy.trans_info
+         (5) calctrans/anthy.corpus_array
+         (6) calctrans/anthy.corpus_bucket
+         (7) calctrans/anthy.weak_words
+          ---[mkanthydic/mkfiledic]--->anthy.dic
+
+Note that we need "initial anthy.dic" to generate anthy.dic, that's
+because 'proccorpus' uses Anthy Dictionary to parse text input.
+
+
+Licensing
+=========
+
+Anthy library is released under the terms of the GNU Lesser General
+Public Licence 3 (or later), i.e., LGPLv3+.  See the file COPYING.LIB
+and COPYING for detail.
+
+Since most of source files are released under the terms of LGPLv2 (or
+later), you might use parts of code under LGPLv2.  See COPYING.LIB2_1
+for detail.
+
+Dictionary files under alt-cannadic/ and mkworddic/ are taken from
+"Alternative Cannadic" Project (alt-cannadic), which is released under
+the terms of GPLv2.  See alt-cannadic/COPYING for detail.
+
+For more licensing information in general, see
+<http://www.gnu.org/licenses/gpl-faq.html>
+
+
+History
+=======
+
+Anthy project was hosted at SourceForge.JP.
+
+	http://anthy.sourceforge.jp/
+	http://anthy.sourceforge.jp/cgi-bin/hiki/hiki.cgi
+
+Since February 2009, development at there stopped.  Bug fixes and
+feature requests was just floating around.
+
+In May 2010, NIIBE Yutaka <gniibe@fsij.org> arranged Git repository at
+git.debian.org, put some of released versions of Anthy and Debian
+packaging code into the repository, and took over the development
+lead.  At alioth.debian.org, pkg-anthy project was created for Anthy
+development and Debian packaging for Anthy and related packages.
+
+
+Authors & Credits
+=================
+
+See AUTHORS and THANKS.
+
+Original Authors were TABATA Yusuke, UGAWA Tomoharu, and guys at Kyoto
+University Micro Computer Club.  YOSHIDA Yuichi added some features.
+The project got fund from IPA Japan (NIIBE Yutaka was project manager
+in 2001 and Fumitoshi UKAI was project manager in 2003).  In the GSoC
+2006 program with FSIJ, HANAOKA Toshiyuki and Higashiyama Masahiko
+contributed some enhancements, under TABATA Yusuke's mentorship.
+
+-- 
+This file is part of Anthy.
+
+Anthy is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+Anthy is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.

@@ -1,0 +1,86 @@
+2019-07-05  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Version 0.4.
+	* configure.ac: Version 0.4.
+	* ChangeLog: Dummy file to be replaced in 'make distcheck'.
+	* Makefile.am (EXTRA_DIST): Add ChangeLog.2010 and ChangeLog.2015.
+	* src-worddic/Makefile.am (version-info): Bump the revision.
+	* depgraph/Makefile.am (EXTRA_DIST): Add (now obsolete) indepword.txt.
+
+2019-07-04  NIIBE Yutaka  <gniibe@fsij.org>
+
+	dist: Support commits not shown in ChangeLog.
+	* Makefile.am (gen-ChangeLog): Commit message which starts with ';' in
+	the first line won't be included in the ChangeLog.
+
+	build: Fix so that 'make distcheck' works.
+	* mkanthydic/Makefile.am (EXTRA_DIST): Add corpus_info and weak_words.
+	[!MAINTAINER_MODE] (anthy.dic): Use srcdir.
+	(CLEANFILES): Remove corpus_info and weak_words.
+	(MAINTAINERCLEANFILES): New with corpus_info and weak_words.
+
+	build: Generate ChangeLog.
+	* Makefile.am (gen-ChangeLog): New.
+	* alt-cannadic/Makefile.am (EXTRA_DIST): Fix README.txt.
+	* configure.ac (AC_CONFIG_AUX_DIR): Add.
+	* build-aux/gitlog-to-changelog: New from gnulib.
+
+2019-07-02  Osamu Aoki  <osamu@debian.org>
+
+	Update zipcode.t using data from skkdic-20190217.
+	* mkworddic/zipcode.t: Replace from skkdic-20190217.
+
+2019-07-02  Osamu Aoki  <osamu@debian.org>
+
+	Fix anthy/input.h (comment only).
+	* anthy/input.h: Fix wrong comment about encoding.
+
+
+	Gbp-Pq: Name 0007-Update-anthy-input.h-comment-only.patch
+
+2019-07-02  Osamu Aoki  <osamu@debian.org>
+
+	Convert src-util/input.c to UTF-8 (comment only).
+	* src-util/input.c: Encode in UTF-8.
+
+
+	Gbp-Pq: Name 0006-Convert-src-util-input.c-to-UTF-8-comment-only.patch
+
+2019-07-02  Osamu Aoki  <osamu@debian.org>
+
+	Fix alt-cannadic/Makefile.am.
+	* alt-cannadic/Makefile.am (EXTRA_DIST): Fix to gcanna.t.
+
+2019-07-02  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Never use encoding=0.
+	* mkworddic/mkdic.c (reverse_multi_segment_word): Use
+	  ANTHY_UTF8_ENCODING.
+	* mkworddic/mkudic.c (get_id_from_word_line): Likewise.
+	* src-worddic/ext_ent.c (search_zipcode_dict): Likewise.
+	* test/check.c (test1): Likewise.
+	* src-worddic/record.c (anthy_create_record): Use EUC-JP
+	as the code assumes.
+
+	* calctrans/proccorpus.c (main): Call anthy_xstr_set_print_encoding
+	to initialize print encoding.
+
+2019-07-02  Osamu Aoki  <osamu@debian.org>
+
+	build: Use in-source files via ../anthy-test-conf
+	* calctrans/proccorpus.c (main): Use anthy-test-conf.
+
+	calctrans: Ignore problematic line to avoid infinite loop.
+	* calctrans/proccorpus.c (trim_segment): Skip when segment can't
+	be changed longer/shorter.
+
+	depgraph: Convert depgraph/master.depword to UTF-8 (data)
+	* depgraph/master.depword: Convert to UTF-8.
+
+2019-07-02  NOKUBI Takatsugu  <knok@daionet.gr.jp>
+
+	dic: Add Japanese era name entry: Reiwa
+	* alt-cannadic/gcanna.t (reiwa): New.
+
+	anthy.el: Fix for newer Emacs.
+	* src-util/anthy.el (anthy-last-command-char): Use last-command-event.

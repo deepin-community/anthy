@@ -1,0 +1,105 @@
+Source: anthy
+Section: utils
+Priority: optional
+Maintainer: Debian Input Method Team <debian-input-method@lists.debian.org>
+Uploaders: NOKUBI Takatsugu <knok@daionet.gr.jp>,
+           Hideki Yamane <henrich@debian.org>,
+           NIIBE Yutaka <gniibe@fsij.org>,
+           Osamu Aoki <osamu@debian.org>
+Build-Depends: debhelper (>= 11~)
+Standards-Version: 4.1.4
+Vcs-Git: https://salsa.debian.org/debian/anthy.git -b debian
+Vcs-Browser: https://salsa.debian.org/debian/anthy/tree/debian
+Homepage: https://wiki.debian.org/Teams/DebianAnthy
+
+Package: anthy
+Architecture: any
+Depends: anthy-common,
+         libanthy1 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Conflicts: anthy-common (<< 1:0.3-1)
+Description: Japanese kana-kanji conversion - utilities
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+
+Package: anthy-common
+Architecture: all
+Multi-Arch: foreign
+Recommends: kasumi
+Depends: ${misc:Depends}
+Description: Japanese kana-kanji conversion - dictionary
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+ .
+ This package provides common dictionary data files.
+
+Package: anthy-el
+Section: lisp
+Architecture: all
+Depends: anthy, emacs24 | emacsen, ${misc:Depends}
+Conflicts: xemacs21-nomule
+Description: Japanese kana-kanji conversion - elisp frontend
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+ .
+ This package provides an Anthy frontend for Emacs.
+
+Package: libanthy1
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: anthy-common, ${misc:Depends}, ${shlibs:Depends}
+Description: Japanese kana-kanji conversion - runtime library
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+ .
+ This package provides runtime shared libraries for Anthy.
+
+Package: libanthy-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libanthy1 (= ${binary:Version}), ${misc:Depends}
+Description: Japanese kana-kanji conversion - runtime library
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+ .
+ This package provides the files necessary for compiling programs that
+ use Anthy.
+
+Package: libanthyinput0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Replaces: libanthy0 (<< 1:0.3-1)
+Breaks: libanthy0 (<< 1:0.3-1)
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Japanese kana-kanji conversion - runtime library for input
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+ .
+ This package provides shared library for input method.
+
+Package: libanthyinput-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Replaces: libanthy-dev (<< 1:0.3-1)
+Breaks: libanthy-dev (<< 1:0.3-1)
+Depends: libanthyinput0 (= ${binary:Version}), ${misc:Depends}
+Description: Japanese kana-kanji conversion - runtime library for input
+ Anthy is kana-kanji conversion engine for Japanese.  It converts
+ hiragana text to mixed kana and kanji.  It is implemented as a library
+ and stores private information in ~/.anthy/.
+ .
+ This package provides the files necessary for compiling programs that
+ use Anthy as an input method.
